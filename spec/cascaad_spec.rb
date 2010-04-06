@@ -1,7 +1,11 @@
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
-describe "Cascaad" do
-	it "should spec" do
+require "cascaad"
+
+describe "Cascaad client" do
+	it "should be created with APIKEY" do
+		client = Cascaad::Client.new 'APIKEY'
+		client.api_key.should == 'APIKEY'
 	end
 end
 
