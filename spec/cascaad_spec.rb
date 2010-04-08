@@ -18,11 +18,10 @@ describe "Cascaad client" do
 			FakeWeb.register(
 				:filename => 'developer_inactive.html',
 				:status => ["403", "Forbidden"],
-				:url => 'http://openapi.cascaad.com/1/supertweet/show.json?domain=twitter.com&message=9760573348,8964285112,8738515101&api_key=BAD_API_KEY'
+				:url => 'http://openapi.cascaad.com/1/supertweet/show.json?domain=twitter.com&message=11845310763,11845134434,11843458299&api_key=BAD_API_KEY'
 			)
-		
 			client = Cascaad::Client.new 'BAD_API_KEY'
-			lambda { client.show_messages("9760573348","8964285112","8738515101") }.should raise_error(Cascaad::BadApiKey)
+			lambda { client.show_messages("11845310763","11845134434","11843458299") }.should raise_error(Cascaad::BadApiKey)
 		end
 	end
 
@@ -31,13 +30,13 @@ describe "Cascaad client" do
 			FakeWeb.register(
 				:filename => 'show_messages.json',
 				:status => ["200", "Ok"],
-				:url => 'http://openapi.cascaad.com/1/supertweet/show.json?domain=twitter.com&message=9760573348,8964285112,8738515101&api_key=GOOD_API_KEY'
+				:url => 'http://openapi.cascaad.com/1/supertweet/show.json?domain=twitter.com&message=11845310763,11845134434,11843458299&api_key=GOOD_API_KEY'
 			)
 		
 			client = Cascaad::Client.new 'GOOD_API_KEY'
-			supertweets = client.show_messages("9760573348","8964285112","8738515101")
+			supertweets = client.show_messages("11845310763","11845134434","11843458299")
 			supertweets.size.should == 3
-			supertweets.first["supertweet"]["author_id"].should == "5663042"
+			supertweets.first["supertweet"]["author_id"].should == "816653"
 
 		end
 	end
