@@ -25,5 +25,21 @@ describe "Cascaad client" do
 			lambda { client.show_messages("9760573348","8964285112","8738515101") }.should raise_error(Cascaad::BadApiKey)
 		end
 	end
+
+	context "when show_messages called with good api_key" do
+		it "should return good result" do
+			FakeWeb.register(
+				:filename => 'show_messages.json',
+				:status => ["200", "Ok"],
+				:url => 'http://openapi.cascaad.com/1/supertweet/show.json?domain=twitter.com&message=9760573348,8964285112,8738515101&api_key=GOOD_API_KEY'
+			)
+		
+			client = Cascaad::Client.new 'GOOD_API_KEY'
+			supertweets = client.show_messages("9760573348","8964285112","8738515101")
+			supertweets.size.should == 3
+			supertweets.first["supertweet"]["author_id"].should == "5663042"
+
+		end
+	end
 end
 

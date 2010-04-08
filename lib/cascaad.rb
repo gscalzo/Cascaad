@@ -1,4 +1,5 @@
 require "open-uri"
+require "json"
 
 module Cascaad
 	class BadApiKey < RuntimeError; end
@@ -16,7 +17,7 @@ module Cascaad
 			st_url = "#{BASE_URL}/show.json?api_key=#{api_key}&domain=twitter.com&message=#{ids.join(',')}"
 			begin
 				open(st_url) do |response|
-					p response.read
+					JSON.parse(response.read)
 				end
 			rescue OpenURI::HTTPError
 				raise Cascaad::BadApiKey
