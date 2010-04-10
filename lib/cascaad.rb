@@ -13,13 +13,7 @@ module Cascaad
 			@api_key = api_key
 		end
 		
-		def initialize(api_key, command="", *ids)
-			@api_key = api_key
-			@command = command
-			@ids = ids
-		end
-		
-		def show(*ids)
+		def show_messages(*ids)
 			Client.new(@api_key, "show", ids)
 		end
 
@@ -36,6 +30,13 @@ module Cascaad
 			rescue OpenURI::HTTPError
 				raise Cascaad::BadApiKey
 			end
+		end
+
+	private
+		def initialize(api_key, command="", *ids)
+			@api_key = api_key
+			@command = command
+			@ids = ids
 		end
 	end
 end

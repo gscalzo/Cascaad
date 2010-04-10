@@ -14,3 +14,18 @@ module FakeWeb
   		FakeWeb.register_uri(:get, url, options)
 	end
 end     
+
+	def reg_bad_url(filename, url)
+	 	FakeWeb.register(
+	   		:filename => filename,
+	   		:status => ["403", "Forbidden"],
+	   		:url => url
+	   	)
+	end
+	def reg_good_url(filename, url)
+	 	FakeWeb.register(
+	   		:filename => filename,
+	   		:status => ["200", "Ok"],
+	   		:url => url
+	   	)
+	end
