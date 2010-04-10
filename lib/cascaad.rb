@@ -13,8 +13,22 @@ module Cascaad
 			@api_key = api_key
 		end
 		
-		def show_messages(*ids)
-			st_url = "#{BASE_URL}/show.json?api_key=#{api_key}&domain=twitter.com&message=#{ids.join(',')}"
+		def initialize(api_key, command="", *ids)
+			@api_key = api_key
+			@command = command
+			@ids = ids
+		end
+		
+		def show(*ids)
+			Client.new(@api_key, "show", ids)
+		end
+
+		def related_messages(*ids)
+			Client.new(@api_key, "related", ids)
+		end
+
+		def from(domain)
+			st_url = "#{BASE_URL}/#{@command}.json?api_key=#{api_key}&domain=#{domain}&message=#{@ids.join(',')}"
 			begin
 				open(st_url) do |response|
 					JSON.parse(response.read)

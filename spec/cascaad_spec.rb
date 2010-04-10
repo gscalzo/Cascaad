@@ -21,12 +21,12 @@ describe "Cascaad client" do
 				:url => 'http://openapi.cascaad.com/1/supertweet/show.json?domain=twitter.com&message=11845310763,11845134434,11843458299&api_key=BAD_API_KEY'
 			)
 			client = Cascaad::Client.new 'BAD_API_KEY'
-			lambda { client.show_messages("11845310763","11845134434","11843458299") }.should raise_error(Cascaad::BadApiKey)
+			lambda { client.show("11845310763","11845134434","11843458299").from("twitter.com") }.should raise_error(Cascaad::BadApiKey)
 		end
 	end
 
-	context "when show_messages called with good api_key" do
-		it "should return good result" do
+	context "when show_messages s called with good api_key" do
+		it "should return some supertweets" do
 			FakeWeb.register(
 				:filename => 'show_messages.json',
 				:status => ["200", "Ok"],
@@ -34,10 +34,24 @@ describe "Cascaad client" do
 			)
 		
 			client = Cascaad::Client.new 'GOOD_API_KEY'
-			supertweets = client.show_messages("11845310763","11845134434","11843458299")
+			supertweets = client.show("11845310763","11845134434","11843458299").from("twitter.com")
 			supertweets.size.should == 3
 			supertweets.first["supertweet"]["author_id"].should == "816653"
+		end
+	end
 
+	context "when related messgaes is called with good api_key" do
+		it "should return some supertweets" do
+			FakeWeb.register(
+				:filename => 'related_messages.json',
+				:status => ["200", "Ok"],
+				:url => 'http://openapi.cascaad.com/1/supertweet/related.json?domain=twitter.com&message=9760573348&api_key=GOOD_API_KEY'
+			)
+		
+			client = Cascaad::Client.new 'GOOD_API_KEY'
+			supertweets = client.related_messages("9760573348").from("twitter.com")
+			supertweets.size.should == 3
+			supertweets.first["supertweet"]["author_id"].should == "51200175"
 		end
 	end
 end
