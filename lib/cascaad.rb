@@ -37,10 +37,7 @@ module Cascaad
 			st_url = "#{BASE_URL}/#{@command}.json?api_key=#{api_key}&domain=#{domain}&message=#{@ids.join(',')}"
 			begin
 				open(st_url) do |response|
-					txt = response.read
-					p txt
-					JSON.parse(txt)
-					#JSON.parse(response.read)
+					JSON.parse(response.read)
 				end
 			rescue OpenURI::HTTPError
 				raise Cascaad::BadApiKey
