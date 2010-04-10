@@ -57,6 +57,21 @@ describe "A Cascaad client" do
 			supertweets.size.should == 3
 			supertweets.first["supertweet"]["author_id"].should == "51200175"
 		end
+		it "should raise BadRequest when show message an empty list of ids" do
+			lambda {
+				@client.show_messages().from("twitter.com")
+			}.should raise_error(Cascaad::BadRequest)
+		end
+		it "should raise BadRequest when show message for nil" do
+			lambda {
+				@client.show_messages(nil).from("twitter.com")
+			}.should raise_error(Cascaad::BadRequest)
+		end
+		it "should raise BadRequest when show message for invalid id" do
+			lambda {
+				@client.show_messages("123", "adc").from("twitter.com")
+			}.should raise_error(Cascaad::BadRequest)
+		end
 	end
 end
 

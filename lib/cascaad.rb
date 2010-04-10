@@ -1,9 +1,19 @@
 require "open-uri"
 require "json"
 
+class Array
+    def valid_ids_required
+		raise Cascaad::BadRequest if(self.empty?)
+		self.each do |id|
+			raise Cascaad::BadRequest unless id =~ /[0-9]+/
+		end
+    end
+end
+
 module Cascaad
 	class BadApiKey < RuntimeError; end
-		
+	class BadRequest < RuntimeError; end
+
 	class Client
 		BASE_URL='http://openapi.cascaad.com/1/supertweet'
 
@@ -14,6 +24,8 @@ module Cascaad
 		end
 		
 		def show_messages(*ids)
+			ids.valid_ids_required
+
 			Client.new(@api_key, "show", ids)
 		end
 
