@@ -1,0 +1,33 @@
+= Cascaad
+http://github.com/gscalzo/Cascaad
+
+== Description
+The ruby cascaad gem. 
+Just a simple wrapper to Cascaad SuperTweetApi.
+
+Implemented "Show SuperTweet Api" and "Related SuperTweets Api" api. 
+"Conversation Api" still to implement. 
+
+== examples
+  
+require "cascaad"
+
+client = Cascaad::Client.new "DEV_API_KEY"
+
+supertweets = client.show_messages("11845310763","11845134434","11843458299").from("twitter.com")
+
+related_supertweets = client.related_messages("11845310763").from("twitter.com")
+
+== docs
+
+Cascaad SuperTweet Api documentation.
+http://cascaad.mashery.com/docs
+
+== INSTALL:
+
+* sudo gem install cascaad
+
+== Copyright
+
+Copyright (c) 2009 John Nunemaker. See LICENSE for details.
+
