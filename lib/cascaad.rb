@@ -25,11 +25,11 @@ module Cascaad
 		
 		def show_messages(*ids)
 			ids.valid_ids_required
-
 			Client.new(@api_key, "show", ids)
 		end
 
 		def related_messages(*ids)
+			ids.valid_ids_required
 			Client.new(@api_key, "related", ids)
 		end
 

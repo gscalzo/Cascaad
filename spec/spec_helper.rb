@@ -2,7 +2,6 @@ module FakeWeb
 	def self.fixture_file(filename)
   		return "" if filename == ""
   		file_path = File.expand_path(File.dirname(__FILE__) + "/fixtures/" + filename)
-		p file_path
   		File.read(file_path)
 	end
 	
