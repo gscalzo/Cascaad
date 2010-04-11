@@ -13,6 +13,7 @@ end
 module Cascaad
 	class BadApiKey < RuntimeError; end
 	class BadRequest < RuntimeError; end
+	class UnsupportedDomain < RuntimeError; end
 
 	class Client
 		BASE_URL='http://openapi.cascaad.com/1/supertweet'
@@ -34,9 +35,11 @@ module Cascaad
 		end
 
 		def from(domain)
-			st_url = "#{BASE_URL}/#{@command}.json?api_key=#{api_key}&domain=#{domain}&message=#{@ids.join(',')}"
+			raise BadRequest if @command.empty?
+			raise UnsupportedDomain unless domain == 'twitter.com'
+
 			begin
-				open(st_url) do |response|
+				open(api_url_for(domain)) do |response|
 					JSON.parse(response.read)
 				end
 			rescue OpenURI::HTTPError
@@ -49,6 +52,10 @@ module Cascaad
 			@api_key = api_key
 			@command = command
 			@ids = ids
+		end
+
+		def api_url_for(domain)
+		  "#{BASE_URL}/#{@command}.json?api_key=#{api_key}&domain=#{domain}&message=#{@ids.join(',')}"
 		end
 	end
 end

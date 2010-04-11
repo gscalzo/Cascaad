@@ -58,18 +58,30 @@ describe "A Cascaad client" do
 			supertweets.first["supertweet"]["author_id"].should == "51200175"
 		end
 
+		it "should raise an exception for un unsupported domain" do
+				lambda {
+					@client.show_messages("1").from("facebook.com")
+				}.should raise_error(Cascaad::UnsupportedDomain)
+		end
+
+		it "should raise an exception when from called before any api" do
+				lambda {
+					@client.from("twitter.com").show_messages("1")
+				}.should raise_error(Cascaad::BadRequest)
+		end
+
 		[:show_messages, :related_messages].each do |message|
-			it "should raise BadRequest when #{message} an empty list of ids" do
+			it "should raise BadRequest when #{message} called with an empty list of ids" do
 				lambda {
 					@client.send(message).from("twitter.com")
 				}.should raise_error(Cascaad::BadRequest)
 			end
-			it "should raise BadRequest when #{message} for nil" do
+			it "should raise BadRequest when #{message} called with nil" do
 				lambda {
 					@client.send(message, nil).from("twitter.com")
 				}.should raise_error(Cascaad::BadRequest)
 			end
-			it "should raise BadRequest when #{message} for invalid id" do
+			it "should raise BadRequest when #{message} called with almost one invalid id" do
 				lambda {
 					@client.send(message,"123", "adc").from("twitter.com")
 				}.should raise_error(Cascaad::BadRequest)

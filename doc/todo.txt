@@ -1,7 +1,7 @@
 simple readme
 only one tweet for related message
-empty list of messages
-error if wrong domain
 gem
+
+
 "since" only for related: exception when called after show?
 
