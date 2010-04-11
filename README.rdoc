@@ -10,13 +10,13 @@ Implemented "Show SuperTweet Api" and "Related SuperTweets Api" api.
 
 == Examples
   
-+require "cascaad"+
+require "cascaad"
 
-+client = Cascaad::Client.new "DEV_API_KEY"+
+client = Cascaad::Client.new "DEV_API_KEY"
 
-+supertweets = client.show_messages("11845310763","11845134434","11843458299").from("twitter.com")+
+supertweets = client.show_messages("11845310763","11845134434","11843458299").from("twitter.com")
 
-+related_supertweets = client.related_messages("11845310763").from("twitter.com")+
+related_supertweets = client.related_messages("11845310763").from("twitter.com")
 == Docs
 
 Cascaad SuperTweet Api documentation.
