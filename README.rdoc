@@ -29,5 +29,5 @@ http://cascaad.mashery.com/docs
 
 == Copyright
 
-Copyright (c) 2009 John Nunemaker. See LICENSE for details.
+Copyright (c) 2010 Giordano Scalzo. See LICENSE for details.
 
